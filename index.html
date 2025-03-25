@@ -9,6 +9,37 @@
     <script src="library.js" defer></script>
 </head>
 <body>
+
+    <dialog id="add-book-dialog">
+        <form>
+            <p>
+                <label>
+                    Add New Book:
+                    <div class="new-input">
+                        <label for="title-input">Title:</label>
+                        <input id="add-title-input" name="title-input" type="text">
+                    </div>
+                    <div class="new-input">
+                        <label for="author-input">Author:</label>
+                        <input id="add-author-input" name="author-input" type="text">
+                    </div>
+                    <div class="new-input">
+                        <label for="pages-input"># Pages:</label>
+                        <input id="add-pages-input" name="pages-input" type="number">
+                    </div>
+                    <div class="new-input">
+                        <label for="read-input">Read?:</label>
+                        <input id="add-read-input" name="read-input" type="checkbox" value="Read">
+                    </div>
+                </label>
+            </p>
+            <div>
+                <button id="cancelConfirmBtn" formmethod="dialog">Cancel</button>
+                <button id="addConfirmBtn" value="default">Confirm</button>
+            </div>
+        </form>
+    </dialog>
+
     <div class="content">
         <header>
             MyLibrary

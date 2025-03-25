@@ -24,34 +24,53 @@ function addBookToLibrary(title, author, numPages, read) {
     library.push(newBook);
 }
 
-addBookToLibrary("My book", "Bob", 231, true);
-addBookToLibrary("Another Title", "Sally", 456, true);
-addBookToLibrary("My book 2", "Bob", 167, false);
-addBookToLibrary("My book", "Bob", 231, true);
-addBookToLibrary("Another Title", "Sally", 456, true);
-addBookToLibrary("My book 2", "Bob", 167, false);
-addBookToLibrary("My book", "Bob", 231, true);
-addBookToLibrary("Another Title", "Sally", 456, true);
-addBookToLibrary("My book 2", "Bob", 167, false);
-addBookToLibrary("My book", "Bob", 231, true);
-addBookToLibrary("Another Title", "Sally", 456, true);
-addBookToLibrary("My book 2", "Bob", 167, false);
+for (let j = 0; j < 10; j++) {
+    addBookToLibrary(`Book ${j}`, `Author ${j}`, 111 + Math.floor(Math.random() * 150), true);    
+}
 
 console.log(library);
 
 
 // DOM organization
-const libraryDisplay = document.querySelector(".library");
-const bookDisplayTemplate = document.querySelector("#book-card-base");
+const libraryDisplay        = document.querySelector(".library");
+const bookDisplayTemplate   = document.querySelector("#book-card-base");
+const addBookButton         = document.querySelector("#add-book-btn");
+const addBookDialog         = document.querySelector("#add-book-dialog");
+const addTitleInput         = document.querySelector("#add-title-input");
+const addAuthorInput        = document.querySelector("#add-author-input");
+const addPagesInput         = document.querySelector("#add-pages-input");
+const addReadInput          = document.querySelector("#add-read-input");
+const confirmNewBookButton  = document.querySelector("#addConfirmBtn");
+const cancelNewBookButton   = document.querySelector("#cancelConfirmBtn");
+// Organization
 bookDisplayTemplate.remove();
 bookDisplayTemplate.id = null;
+// Listeners
+addBookButton.addEventListener("click", () => addBookDialog.showModal());
+confirmNewBookButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    addNewBookFromDialog();
+    addBookDialog.close();
+});
 
+function addNewBookFromDialog(e) {
+    console.log("addReadInput.checked: " + addReadInput.checked);
+    addBookToLibrary(addTitleInput.value, addAuthorInput.value, addPagesInput.value, addReadInput.checked);
+    displayLibrary();
+}
+
+
+// Display
 function displayCard(card, book) {
-    const titleElement = card.querySelector(".title");
+    const titleElement  = card.querySelector(".title");
     const authorElement = card.querySelector(".author");
+    // const cardElement   = card.querySelector(".book-card");
 
     titleElement.textContent = book.title;
-    authorElement.textContent = book.author;
+    authorElement.textContent = `${book.author} (${book.numPages})`;
+    if (book.read) {
+        card.classList.add("read");
+    }
 }
 function removeLastCard() {
     libraryCards.removeChild(libraryDisplay.lastChild);

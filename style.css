@@ -14,6 +14,8 @@ header {
     padding: 10px 30px;
     vertical-align: center;
     font-size: 2rem;
+    display: flex;
+    gap: 30px;
 }
 
 .edit-btn {
@@ -50,7 +52,7 @@ header {
     /* Need relative position for overflow to work before hover */
     position: relative;
     overflow: hidden;
-    border: solid black 1px;
+    border: solid red 1px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -87,8 +89,9 @@ header {
     box-shadow: 5px 5px 5px 1px #bbb;
     transition: var(--card-hover-transition-time);
 }
-.book-card {
-    position: relative;
+.book-card.read {
+    border-color: #373;
+    border-width: 3px;
 }
 .remove-btn {
     position: absolute;
