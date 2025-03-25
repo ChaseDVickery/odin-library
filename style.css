@@ -1,16 +1,82 @@
 
+:root {
+    --card-hover-transition-time: 0.05s;
+}
 
 .library {
     display: grid;
 
-    grid-template-rows: repeat(2, 1fr);
+    /* grid-template-rows: repeat(2, clamp(150px, 100%, 300px)); */
+    grid-auto-rows: 300px;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* grid-template-columns: fit-content(20%); */
+    /* grid-template-columns: repeat(auto-fit, clamp(250px, 33%, 400px)); */
+    gap: 15px;
 }
 
-.book-card {
+.book-card  {
+    /* Need relative position for overflow to work before hover */
+    position: relative;
+    overflow: hidden;
     border: solid black 1px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    /* width: min(250px, 100%); */
+    height: clamp(150px, 100%, 300px);
+
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px 1px #ddd;
+    transition: var(--card-hover-transition-time);
+
+    background-color: #eda;
+
+    .title {
+        width: 100%;
+        text-align: center;
+        overflow-wrap: break-word;
+        overflow: auto;
+        text-wrap: wrap;
+        font-size: 2rem;
+    }
+    .author {
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem;
+        color: #555;
+    }
+}
+.book-card:hover {
+    /* overflow: hidden; */
+    transform: translateY(-1px);
+    scale: 1.01;
+    box-shadow: 5px 5px 5px 1px #bbb;
+    transition: var(--card-hover-transition-time);
+    /* .remove-btn {
+        scale: 1.3;
+        transition: var(--card-hover-transition-time);
+    } */
+}
+.book-card {
+    position: relative;
+}
+.remove-btn {
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    width: 35px;
+    height: 25px;
+    border-radius: 0px;
+    transition: var(--card-hover-transition-time);
+
+    background-color: #f99;
+    border: solid white 1px;
+    color: white;
+}
+.remove-btn:hover {
+    background-color: #f66;
+    transform: scaleX(1.3);
+    transition: var(--card-hover-transition-time);
 }

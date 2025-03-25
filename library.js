@@ -27,6 +27,15 @@ function addBookToLibrary(title, author, numPages, read) {
 addBookToLibrary("My book", "Bob", 231, true);
 addBookToLibrary("Another Title", "Sally", 456, true);
 addBookToLibrary("My book 2", "Bob", 167, false);
+addBookToLibrary("My book", "Bob", 231, true);
+addBookToLibrary("Another Title", "Sally", 456, true);
+addBookToLibrary("My book 2", "Bob", 167, false);
+addBookToLibrary("My book", "Bob", 231, true);
+addBookToLibrary("Another Title", "Sally", 456, true);
+addBookToLibrary("My book 2", "Bob", 167, false);
+addBookToLibrary("My book", "Bob", 231, true);
+addBookToLibrary("Another Title", "Sally", 456, true);
+addBookToLibrary("My book 2", "Bob", 167, false);
 
 console.log(library);
 
