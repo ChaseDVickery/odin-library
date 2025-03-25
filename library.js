@@ -1,7 +1,7 @@
 "use strict"
 
 const library = [];
-const libraryCards = [];
+// const libraryCards = [];
 
 // START Book
 function Book(title, author, numPages, read) {
@@ -16,6 +16,10 @@ function Book(title, author, numPages, read) {
 }
 Book.prototype.info = function() {
     return `${this.title} by ${this.author}, ${this.numPages} pages, ${this.read ? 'read' : 'not read yet'}`;
+}
+Book.prototype.toggleRead = function() {
+    console.log(`Changing book (${this.id}) read status: ${this.read} -> ${!this.read}`);
+    this.read = !this.read;
 }
 // END Book
 
@@ -66,30 +70,64 @@ function displayCard(card, book) {
     const authorElement = card.querySelector(".author");
     // const cardElement   = card.querySelector(".book-card");
 
+    card.dataset.bookid = book.id;
     titleElement.textContent = book.title;
     authorElement.textContent = `${book.author} (${book.numPages})`;
     if (book.read) {
         card.classList.add("read");
+    } else {
+        card.classList.remove("read");
     }
 }
-function removeLastCard() {
-    libraryCards.removeChild(libraryDisplay.lastChild);
+function getBookIndexFromCard(card) {
+    return library.findIndex((element) => element.id.toString() === card.dataset.bookid);
+}
+function removeBookWithCard(card) {
+    const index = getBookIndexFromCard(card);
+    if (index < 0) { return; }
+    library.splice(index, 1);
+    displayLibrary();
+}
+function toggleReadBookWithCard(card) {
+    console.log("toggleReadBookWithCard");
+    const index = getBookIndexFromCard(card);
+    if (index < 0) { return; }
+    console.log("toggleReadBookWithCard found at index: " + index);
+    library[index].toggleRead();
+    displayLibrary();
+}
+
+
+function removeLastCardDisplay() {
+    // libraryCards.(libraryDisplay.lastChild);
     libraryDisplay.removeChild(libraryDisplay.lastChild);
 }
+// function removeLastCardDisplay() {
+//     libraryDisplay.removeChild(libraryDisplay.lastChild);
+// }
 function addNewCardDisplay() {
     // https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode
     const newDisplay = bookDisplayTemplate.cloneNode(true);
     libraryDisplay.appendChild(newDisplay);
-    libraryCards.push(newDisplay);
+    // libraryCards.push(newDisplay);
+
+    const removeButton  = newDisplay.querySelector(".remove-btn");
+    removeButton.addEventListener("click", (e) => {
+        removeBookWithCard(newDisplay);
+    });
+    const toggleButton  = newDisplay.querySelector(".toggle-btn");
+    toggleButton.addEventListener("click", (e) => {
+        toggleReadBookWithCard(newDisplay);
+    });
 }
 
 function displayLibrary() {
     // Correct the number of displays
-    while (libraryCards.length > library.length) { removeLastCardDisplay(); }
-    while (libraryCards.length < library.length) { addNewCardDisplay(); }
+    while (libraryDisplay.childElementCount > library.length) { removeLastCardDisplay(); }
+    while (libraryDisplay.childElementCount < library.length) { addNewCardDisplay(); }
     // Modify all card content to match library
     for (let i = 0; i < library.length; i++) {
-        displayCard(libraryCards[i], library[i]);
+        displayCard(libraryDisplay.children[i], library[i]);
     }
 }
 
